@@ -9,6 +9,6 @@
       <%= prototype.catch_copy %>
     </p>
     <%# "by プロトタイプの投稿者名" %>
-    <%= link_to "by #{prototype.user.name}", user_path(prototype.user), class: :card__user %>
+    <%= link_to "by #{prototype.user.name}", user_path(prototype.user.id), class: :card__user %>
   </div>
 </div>

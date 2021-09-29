@@ -6,15 +6,9 @@
    
       <div class="greeting"> 
         <%= "こんにちは、 " %>
-        <%= link_to "#{current_user.name}さん", user_path, class: :greeting__link%>
+        <%= link_to "#{current_user.name}さん", "/users/#{current_user.id}" %>
       </div>
-   
-    <%# // ログインしているときは上記を表示する %>
-    <% else %>
-    <%# // ユーザーがログアウトしている場合に実行する処理 %>
-      
-      
-
+    <%# // ログインしているときは上記を表示する %>      
     <% end %>
     
     <div class="card__wrapper">

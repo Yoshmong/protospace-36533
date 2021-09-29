@@ -31,33 +31,34 @@ class PrototypesController < ApplicationController
 
   
   def edit
-    unless @prototype.user_id == current_user.id
-      redirect_to action: :index
+    unless current_user == @prototype.user
+      redirect_to root_path
     end
   end
   
   def update
     if @prototype.update(prototypes_params)
-       redirect_to prototype_path(@prototype.id)
+       redirect_to prototype_path(@prototype)
     else
-      @prototype = prototype.update(prototypes_params)
       render :edit
     end
   end
 
   def show
-    @comment= Comment.new
+    @comment = Comment.new
     @comments = @prototype.comments.includes(:user)
   end
   
 
   private
 
+  def set_prototype
+    @prototype = Prototype.find(params[:id])
+  end
+
   def prototypes_params
     params.require(:prototype).permit(:title, :catch_copy, :concept, :image).merge(user_id: current_user.id)
   end
 
-  def set_prototype
-    @prototype = Prototype.find(params[:id])
-  end
+
 end

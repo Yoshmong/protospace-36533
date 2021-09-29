@@ -1,9 +1,8 @@
 class UsersController < ApplicationController
 
 def show
-  @name = current_user.name
-  @user.prototypes = current_user.prototypes
-  
+  @user = User.find(params[:id])
+  @prototypes = @user.prototypes  
 end
 
 
@@ -18,10 +17,10 @@ end
   #   end
   # end
 
-  private
+  # private
 
-  def user_params
-    params.require(:user).permit(:name, :email)
-  end
+  # def user_params
+  #   params.require(:user).permit(:name, :email)
+  # end
 
 end
