@@ -1,7 +1,7 @@
 class PrototypesController < ApplicationController
  
   before_action :set_prototype, except: [:index, :new, :create]
-  before_action :authenticate_user!, except: [:index, :show]
+  before_action :move_to_index, except: [:index, :show]
 
   def index
     @prototypes = Prototype.includes(:user).order("created_at ASC")
@@ -14,7 +14,7 @@ class PrototypesController < ApplicationController
   def create
     @prototype = Prototype.new(prototypes_params)
     if @prototype.save
-      redirect_to root_path      
+      redirect_to root_path
     else
       render :new      
     end
@@ -31,9 +31,9 @@ class PrototypesController < ApplicationController
 
   
   def edit
-    unless current_user == @prototype.user
-      redirect_to root_path
-    end
+      unless @prototype.user_id == current_user.id
+      redirect_to action: :index
+      end
   end
   
   def update
@@ -60,5 +60,10 @@ class PrototypesController < ApplicationController
     params.require(:prototype).permit(:title, :catch_copy, :concept, :image).merge(user_id: current_user.id)
   end
 
+  def move_to_index
+    unless user_signed_in?
+      redirect_to action: :index
+    end
 
+ end
 end
